@@ -19,16 +19,28 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps",
-    "apps.homepage",
 ]
+
+PETPAL_APPS = [
+    "apps",
+    "apps.usermanagement",
+    "apps.homepage",
+    "apps.dog",
+  
+]
+
+INSTALLED_APPS = DJANGO_APPS + PETPAL_APPS
+
+AUTH_USER_MODEL = "apps_usermanagement.CustomUser"
+AUTHENTICATION_BACKENDS = ['apps.usermanagement.backends.EmailBackend']
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -41,6 +53,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "petpal.urls"
+
+
 
 TEMPLATES = [
     {
@@ -101,6 +115,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/petpal_images/'
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'petpal_images')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
