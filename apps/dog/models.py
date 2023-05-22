@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from apps.resources.utils import *
 from apps.usermanagement.models import CustomUser
 # Create your models here.

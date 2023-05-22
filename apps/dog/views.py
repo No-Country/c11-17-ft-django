@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
 from apps.dog.models import Dog
 from apps.usermanagement.models import CustomUser
 from apps.dog.forms import AddDogForm
-
+from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 @login_required(login_url='login')
 def add_dog(request):
@@ -45,5 +48,11 @@ def destroy_dog(request,id):
     dog_to_destroy = Dog.objects.get(id=id)
     dog_to_destroy.delete()
     return redirect('dogs-list')
+    
+class DogUpdateView(UpdateView):
+    model = Dog
+    form_class = AddDogForm
+    template_name = 'dog/dog_form.html'
+    success_url = reverse_lazy('dogs-list')
     
     
