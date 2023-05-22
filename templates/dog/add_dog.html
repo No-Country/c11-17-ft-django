@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+   <form  method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      <div>
+       <div>
+         <h4>Agregar perfil del perro</h4>
+       </div>
+
+      <div>
+         <label for="name">
+            <h6>Name</h6>
+         </label>
+         {{ form.name }}
+      </div>
+      <div>
+        <label for="age">
+           <h6>Edad</h6>
+        </label>
+        {{ form.age }}
+      </div>
+      <div>
+        <label for="breed">
+          <h6>Raza</h6>
+        </label>
+        {{ form.breed }}
+      </div>
+      <div>
+        <label for="photo">
+          <h6>Agregar foto</h6>
+        </label>
+        {{ form.photo }}
+      </div>
+      <input type="submit">
+    </div>
+    </form>
+</main>
+{% endblock %}

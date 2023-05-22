@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+  <div>
+    <div>
+      <h4>Mis adorables perros</h4>
+    </div>
+    <div> 
+      {% for dog in dogs %}
+        <div>
+           <a  href="http://localhost:8000/add-dog">
+            <spam> {{ dog.name }} | {{ dog.breed }} </spam>
+           </a>
+           <a href="{% url 'destroy-dog' dog.id  %}">
+            <h5>Dar de baja a mi perro</h5>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  <div>
+         
+</main>
+{% endblock %}
