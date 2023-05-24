@@ -13,10 +13,11 @@ def add_dog(request):
     if request.method == 'POST':
         form = AddDogForm(request.POST, request.FILES)
         if form.is_valid():
-            valid_pet_owner = CustomUser.fetch_pet_owners.get(id=request.user.id)
-            
+            try:
+                valid_pet_owner = CustomUser.fetch_pet_owners.get(id=request.user.id)
+            except CustomUser.DoesNotExist: 
+                return redirect('home-page')
             if valid_pet_owner:
-
                 pet_owner = form.save(commit=False)
                 valid_dog_name = Dog.objects.filter(name=pet_owner.name, dog_owner_id=valid_pet_owner).first()
                 if not valid_dog_name:
