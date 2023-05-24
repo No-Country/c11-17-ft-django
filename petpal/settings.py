@@ -34,6 +34,8 @@ PETPAL_APPS = [
     "apps.usermanagement",
     "apps.homepage",
     "apps.dog",
+    "apps.posts",
+    "apps.reservation",
   
 ]
 

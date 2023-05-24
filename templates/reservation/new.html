@@ -1,0 +1,15 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div class="mx-auto">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="sitter" class="form-label">Cuidador</label>
+      {{ form.sitter.errors }}
+      <input type="text" class="form-control" id="sitter" name="sitter" value="{{ form.sitter.value|default:'' }}"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>
+{% endblock content %}
