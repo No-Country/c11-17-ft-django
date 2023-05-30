@@ -3,7 +3,13 @@
 {% block content %}
 <div class="container mt-3">
     <div class="mb-3">
-        <a href="{% url 'post_new' %}" class="btn btn-primary">Crear nuevo post</a>
+      {% if user.is_authenticated and user.is_pet_sitter %}
+        {% if user.post %}
+          <a href="{% url 'post_edit' user.post.id %}" class="btn btn-primary">Editar publicación</a>
+        {% else %}
+          <a href="{% url 'post_new' %}" class="btn btn-primary">Crear publicación</a>
+        {% endif %}
+      {% endif %}
     </div>
     <div class="row">
       {% for post in object_list %}

@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps",
     "apps.homepage",
     "apps.posts",
     "apps.user",
@@ -115,3 +114,5 @@ MEDIA_URL = '/media/'
 
 
 AUTH_USER_MODEL = 'user.User'
+
+LOGIN_URL = 'login'
