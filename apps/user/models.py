@@ -17,7 +17,14 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class User(AbstractBaseUser, PermissionsMixin):
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
@@ -26,7 +33,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     photo = models.ImageField(upload_to='photos/', blank=True)
-    location = models.CharField(max_length=100)
     is_deleted = models.BooleanField(default=False)
 
     objects = UserManager()
