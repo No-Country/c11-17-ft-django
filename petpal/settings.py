@@ -36,7 +36,7 @@ PETPAL_APPS = [
     "apps.dog",
     "apps.posts",
     "apps.reservation",
-  
+    "apps.user",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PETPAL_APPS
@@ -136,3 +136,6 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = 'user.User'
+
+LOGIN_URL = 'login'
