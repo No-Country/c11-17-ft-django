@@ -1,1 +1,13 @@
-<h1>{{ welcome }}</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2>Home</h2>
+
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+
+{% endblock %}

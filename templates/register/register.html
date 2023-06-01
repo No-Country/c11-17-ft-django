@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <form  method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div>
+           <h4>Comienza a ser productor</h4>
+           <span>Primero, crea tu cuenta en El buen conejo</span> <br>
+           <span>¿Ya tienes cuenta?<a href="register">Iniciá sesión</a></span>
+           {% if error != '' %}
+           <p>{{error}}</p>
+           {% endif %}
+        </div>
+        <div>
+            <div>
+                <label for="username">
+                   <h6>Nombre</h6>
+                </label>
+                {{form.username}} 
+             </div>
+             <div>
+                <label for="last_name">
+                    <h6>Apellido</h6>
+                </label>
+                {{form.last_name}} 
+             </div>
+
+        </div>
+        <div>
+           <label for="email">
+              <h6>Email</h6>
+           </label>
+           {{form.email}}
+        </div>
+
+        <div>
+          <label for="user_role">
+             <h6>¿Cuidador?</h6>
+          </label>
+          {{form.user_role}}
+       </div>
+       <div>
+        <label for="photo">
+           <h6>Foto del perfil</h6>
+        </label>
+        {{form.photo}}
+     </div>
+        <div>
+           <label for="password">
+              <h6>Contraseña</h6>
+           </label>
+           <div>
+            {{form.password}}
+        </div>
+        <div>
+            <label for="location">
+               <h6>Selecciona tu Estado</h6>
+            </label>
+            {{form.location}}
+         </div>
+         <input type="submit">
+     </form>
+     <p class="register-info">
+      Al continuar, usted reconoce que ha leído, entendido y está de acuerdo con las Condiciones del servicio y la Política de privacidad de El buen conejo.
+     </p>
+     <script src="{% static 'js/form/form_register.js' %}" type="module" ></script>  
+</main>
+{% endblock %}

@@ -31,19 +31,20 @@ DJANGO_APPS = [
 
 PETPAL_APPS = [
     "apps",
-    "apps.usermanagement",
     "apps.homepage",
     "apps.dog",
     "apps.posts",
     "apps.reservation",
-  
+    "apps.user",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PETPAL_APPS
 
-AUTH_USER_MODEL = "apps_usermanagement.CustomUser"
+""" AUTH_USER_MODEL = "apps_usermanagement.CustomUser"
 AUTHENTICATION_BACKENDS = ['apps.usermanagement.backends.EmailBackend']
+ """
 
+ 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -74,6 +75,7 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'home-page'
 WSGI_APPLICATION = "petpal.wsgi.application"
 
 
@@ -131,3 +133,6 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = 'user.User'
+
+LOGIN_URL = 'login'
