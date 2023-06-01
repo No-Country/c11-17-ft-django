@@ -1,6 +1,5 @@
 from django import forms
 from apps.dog.models import Dog
-from apps.usermanagement.models import CustomUser
 from django.core.exceptions import ValidationError
 from apps.resources.utils import *
 

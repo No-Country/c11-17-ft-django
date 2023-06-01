@@ -1,5 +1,5 @@
+from django.conf import settings
 from django.db import models
-from apps.usermanagement.models import CustomUser
 from apps.dog.models import Dog
 from django.core.exceptions import ValidationError
 # Create your models here.
@@ -12,9 +12,9 @@ def validate_sitter(value):
       raise ValidationError('Debe ser cuidador de perro')
     
 class Reservation(models.Model):
-    sitter = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
+    sitter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
             validators=[validate_sitter], related_name='sitter_reservations')
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE,\
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,\
       validators=[validate_owner],related_name='owner_reservations')
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE,related_name='dog_reservations')
     total_cost = models.IntegerField()

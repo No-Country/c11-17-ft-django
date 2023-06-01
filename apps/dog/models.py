@@ -1,12 +1,11 @@
 from django.db import models
 from django.db.models import Q
 from apps.resources.utils import *
-from apps.usermanagement.models import CustomUser
-# Create your models here.
+from django.conf import settings
 
 
 class Dog(models.Model):
-    dog_owner_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    dog_owner_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
     age = models.IntegerField()
     breed = models.CharField(max_length=30,choices=BREEDS, default=BREEDS[0][1])

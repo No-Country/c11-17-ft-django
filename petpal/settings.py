@@ -31,7 +31,6 @@ DJANGO_APPS = [
 
 PETPAL_APPS = [
     "apps",
-    "apps.usermanagement",
     "apps.homepage",
     "apps.dog",
     "apps.posts",
@@ -41,9 +40,11 @@ PETPAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + PETPAL_APPS
 
-AUTH_USER_MODEL = "apps_usermanagement.CustomUser"
+""" AUTH_USER_MODEL = "apps_usermanagement.CustomUser"
 AUTHENTICATION_BACKENDS = ['apps.usermanagement.backends.EmailBackend']
+ """
 
+ 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -82,13 +83,9 @@ WSGI_APPLICATION = "petpal.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'petpal',
-        'USER': 'petpal',
-        'PASSWORD': 'petadmin',
-        'HOST': 'localhost',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
