@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 
 UserModel = get_user_model()
-print("Bingo: ",UserModel)
 class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:

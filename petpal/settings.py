@@ -74,6 +74,7 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'home-page'
 WSGI_APPLICATION = "petpal.wsgi.application"
 
 
@@ -81,9 +82,13 @@ WSGI_APPLICATION = "petpal.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'petpal',
+        'USER': 'petpal',
+        'PASSWORD': 'petadmin',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

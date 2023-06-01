@@ -8,19 +8,19 @@ from .managers import CustomUserManager
 class CustomUserPetOwnerManager(models.Manager):
     def get_queryset(self):
         return super(CustomUserPetOwnerManager,
-                  self).get_queryset().filter(is_pet_sitter=False, is_deleted=False)
+                  self).get_queryset().filter(user_role='DUEÑO')
 
 
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=20, unique=YES)
-    last_name = models.CharField(max_length=100) 
+    last_name = models.CharField(max_length=50) 
     email = models.EmailField(_("email address"), unique=YES)
     is_staff = models.BooleanField(default=NOT)
-    is_pet_sitter = models.BooleanField(null=YES)
+    user_role = models.CharField(max_length=8, choices=USER_ROLE, default=USER_ROLE[0][1])
     photo = models.ImageField(null=YES, blank=YES, default=USER_AVATAR_PATH) 
-    location = models.CharField(max_length=150)
+    location = models.CharField(max_length=50)
     is_deleted = models.BooleanField(default=NOT)
     date_joined = models.DateTimeField(auto_now_add=YES)
     
