@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div class="mx-auto">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label">Título</label>
+      {{ form.title.errors }}
+      <input type="text" class="form-control" id="title" name="title" value="{{ form.title.value|default:'' }}"/>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripción</label>
+      {{ form.description.errors }}
+      <textarea class="form-control" placeholder="" id="description" name="description">{{ form.description.value|default:'' }}</textarea>
+    </div>
+    <div class="mb-3">
+      
+      {% if form.photo.value %}
+        <p>Imagen actual</p>
+        <img width="200px" class="mb-4" src="{{ form.photo.value.url }}" alt="Imagen actual del post" />
+        {% else %}
+        <label for="photo" class="form-label">Imagen</label>
+      {% endif %}
+      {{ form.photo.errors }}
+      <input class="form-control" type="file" id="photo" name="photo">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>
+{% endblock content %}
