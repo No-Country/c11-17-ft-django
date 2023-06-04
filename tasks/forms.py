@@ -1,52 +1,68 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
+CITIES_LATIN_AMERICA = [
+    ('Buenos Aires', 'Buenos Aires'),
+    ('Sao Paulo', 'Sao Paulo'),
+    ('Ciudad de México', 'Ciudad de México'),
+    # Agrega más ciudades de América Latina según sea necesario
+]
 
-class RegistrationForm(forms.Form):
-    username = forms.CharField(max_length=20)
-    last_name = forms.CharField(max_length=100)
-    email = forms.EmailField(required=True)
+
+class RegistrationForm(UserCreationForm):
     is_pet_sitter = forms.BooleanField(required=False)
-    is_staff = forms.BooleanField(required=False)
     photo = forms.ImageField(required=False)
-    location = forms.CharField(max_length=150)
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(
-        label='Confirm Password', widget=forms.PasswordInput)
+    location = forms.ChoiceField(choices=CITIES_LATIN_AMERICA, required=False)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ['username', 'first_name', 'last_name', 'email', 'is_pet_sitter',
+                  'is_staff', 'photo', 'location', 'password1', 'password2']
+        widgets = {
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'password1': 'Password',
+            'password2': 'Confirm Password',
+        }
+        help_texts = {
+            'username': None,
+        }
+        error_messages = {
+            'password1': {
+                'required': 'Please enter a password.',
+            },
+            'password2': {
+                'required': 'Please confirm your password.',
+            },
+        }
 
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords do not match.")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['is_pet_sitter'].label = 'Are you a pet sitter?'
+        self.fields['password2'].label = 'Confirm Password'
+        self.fields['is_staff'].label = 'Are you part of the staff?'
+        self.fields['password2'].help_text = ''
 
     def save(self, commit=True):
-        cleaned_data = self.cleaned_data
-        username = cleaned_data['username']
-        last_name = cleaned_data['last_name']
-        email = cleaned_data['email']
-        is_pet_sitter = cleaned_data['is_pet_sitter']
-        is_staff = cleaned_data['is_staff']
-        photo = cleaned_data['photo']
-        location = cleaned_data['location']
-        password = cleaned_data['password1']
-
-        user = CustomUser(
-            username=username,
-            last_name=last_name,
-            email=email,
-            is_pet_sitter=is_pet_sitter,
-            is_staff=is_staff,
-            photo=photo,
-            location=location,
-        )
-
-        # Establecer la contraseña utilizando set_password
-        user.set_password(password)
+        user = super().save(commit=False)
+        user.is_pet_sitter = self.cleaned_data.get('is_pet_sitter', False)
+        user.is_staff = self.cleaned_data.get('is_staff', False)
+        user.photo = self.cleaned_data.get('photo', None)
+        user.location = self.cleaned_data.get('location', '')
 
         if commit:
             user.save()
 
         return user
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        existing_user = CustomUser.objects.exclude(
+            pk=self.instance.pk).filter(username=username)
+        if existing_user.exists():
+            raise forms.ValidationError(
+                'A user with that username already exists.')
+        return username

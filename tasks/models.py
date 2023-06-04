@@ -4,8 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
+    first_name = models.CharField(max_length=150)
     is_pet_sitter = models.BooleanField(default=False)
-    photo = models.ImageField(upload_to='user_photos', blank=True, null=True)
+    photo = models.ImageField(upload_to='user_photos/', blank=True, null=True)
     location = models.CharField(max_length=150)
 
     def save(self, *args, **kwargs):
@@ -15,9 +16,11 @@ class CustomUser(AbstractUser):
 
 
 class RegistrationForm(forms.ModelForm):
+    username = forms.CharField(max_length=150)
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'last_name', 'email', 'is_pet_sitter',
+        fields = ['username', 'first_name', 'last_name', 'email', 'is_pet_sitter',
                   'is_staff', 'photo', 'location', 'password1', 'password2']
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -35,6 +38,7 @@ class RegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         cleaned_data = self.cleaned_data
         username = cleaned_data['username']
+        first_name = cleaned_data['first_name']
         last_name = cleaned_data['last_name']
         email = cleaned_data['email']
         is_pet_sitter = cleaned_data['is_pet_sitter']
@@ -45,6 +49,7 @@ class RegistrationForm(forms.ModelForm):
 
         user = CustomUser(
             username=username,
+            first_name=first_name,
             last_name=last_name,
             email=email,
             is_pet_sitter=is_pet_sitter,
