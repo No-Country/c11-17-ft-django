@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-3">
@@ -17,14 +18,34 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body">
-            <h5 class="card-title">Contacto</h5>
+            <h5 class="card-title">Información</h5>
             <p><strong>Nombre:</strong> {{ post.user.name }}</p>
-            <p><strong>Email:</strong> {{ post.user.email }}</p>
-            <p><strong>Teléfono:</strong> {{ post.user.phone }}</p>
             <p><strong>Locación:</strong> {{ post.user.location }}</p>
+            <p><strong>Costo por hora:</strong> {{ post.cost_hour }}</p>
           </div>
+        </div>
+        <div class="mb-4">
+          {% if user != post.user %}
+            {% comment %} Verificar que el usuario del post no sea el mismo del logeado {% endcomment %}
+            {% if user.owner_reservations.exists %}
+            <button class="btn btn-primary w-100 p-3 fs-4" disabled>En espera de confirmación</button>
+            {% else %}
+            <button class="btn btn-primary w-100 p-3 fs-4" data-bs-toggle="modal" data-bs-target="#selectDogModal">Solicitar Servicio</button>
+            {% endif %}
+
+          {% endif %}
         </div>
       </div>
     </div>
 </div>
+
+{% include "posts/modal.html" %}
+
 {% endblock content %}
+
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock js %}

@@ -12,14 +12,21 @@ def validate_sitter(value):
       raise ValidationError('Debe ser cuidador de perro')
     
 class Reservation(models.Model):
+    STATUS_CHOICES = [
+        ('S', 'Solicitada'),
+        ('A', 'Aceptada'),
+        ('R', 'Rechazada'),
+        ('C', 'Cancelada'),
+    ]
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='S')
     sitter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
             validators=[validate_sitter], related_name='sitter_reservations')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,\
       validators=[validate_owner],related_name='owner_reservations')
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE,related_name='dog_reservations')
-    total_cost = models.IntegerField()
-    start_date = models.DateField()
-    end_date = models.DateField()
+    total_cost = models.IntegerField(null=True)
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
     
     
     

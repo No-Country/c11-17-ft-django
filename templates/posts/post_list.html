@@ -24,16 +24,6 @@
     </div>
     {% comment %} Columna del Listado de publicaciones {% endcomment %}
     <div class="col-md-8">
-      
-      <div class="mb-3">
-        {% if user.is_authenticated and user.is_pet_sitter %}
-          {% if user.posts %}
-            <a href="{% url 'post_edit' user.posts.id %}" class="btn btn-primary">Editar mi publicación</a>
-          {% else %}
-            <a href="{% url 'post_new' %}" class="btn btn-primary">Crear publicación</a>
-          {% endif %}
-        {% endif %}
-      </div>
       <div class="row">
         {% for post in object_list %}
         <div class="col-md-4">

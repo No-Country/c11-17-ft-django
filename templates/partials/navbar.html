@@ -23,16 +23,30 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'dogs_list' %} ">Mis Perros</a>
           </li>
+
+          {% if user.is_pet_sitter %}
+            <a class="nav-link" href="{% url 'reservations' %} ">Solicitudes</a>
+          {% endif %}
         {% endif %}
         
         
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Gestión cuenta | perfil
+            Perfil
           </a>
           <ul class="dropdown-menu">
             {% if user.is_authenticated %}
               <li><a class="dropdown-item" href="{% url 'logout' %}">Salir</a></li>
+
+              {% comment %} Comprobar si el usuario es pet sitter y si tiene un post ya creado {% endcomment %}
+              {% if user.is_pet_sitter %}
+                {% if user.posts %}
+                  <li><a href="{% url 'post_edit' user.posts.id %}" class="dropdown-item">Editar mi publicación</a></li>
+                {% else %}
+                  <li><a href="{% url 'post_new' %}" class="dropdown-item">Crear publicación</a></li>
+                {% endif %}
+              {% endif %}
+
             {% else %}
               <li><a class="dropdown-item" href="{% url 'login' %}">Entrar</a></li>
               <li><a class="dropdown-item" href="{% url 'register' %}">Crear cuenta</a></li>
