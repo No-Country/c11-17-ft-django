@@ -6,6 +6,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     photo = models.ImageField(upload_to='photos/')
+    cost_hour = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
