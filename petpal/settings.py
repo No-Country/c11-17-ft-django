@@ -1,8 +1,15 @@
 
+import os
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# La ruta absoluta al directorio media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Configuraciones de la carpeta "media"
+MEDIA_URL = '/media/'  # La URL base para servir archivos media
 
 
 # Quick-start development settings - unsuitable for production
@@ -16,6 +23,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'tasks.CustomUser'
 
 # Application definition
 
@@ -36,6 +44,7 @@ PETPAL_APPS = [
     "apps.posts",
     "apps.reservation",
     "apps.user",
+    "apps.tasks",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PETPAL_APPS
@@ -62,7 +71,7 @@ ROOT_URLCONF = "petpal.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR,'templates')],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -94,12 +103,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+
 ]
 
 
@@ -134,5 +138,9 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'user.User'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 LOGIN_URL = 'login'
