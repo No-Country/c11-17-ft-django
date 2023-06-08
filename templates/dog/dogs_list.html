@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section id="dogs" class="dogs">
+  <div class="container">
+    <div class="mt-4">
+      <h4>Mis adorables perros</h4>
+    </div>
+
+
+    <div> 
+      <div>
+        <a href="{% url 'add_dog' %}">
+          Agregar Perro
+       </a>
+      </br>
+      </div>
+      {% for dog in dogs %}
+        <div>
+           
+           <spam> {{ dog.name }} | {{ dog.breed }} </spam>
+           
+           <a href="{% url 'destroy-dog' dog.id  %}">
+            <h5>Dar de baja a mi perro</h5>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

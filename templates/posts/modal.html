@@ -1,0 +1,36 @@
+<div class="modal fade" id="selectDogModal" tabindex="-1" aria-labelledby="selectDogModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="selectDogModalLabel">Selecciona tu perro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form id="selectDogForm">
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+          <select class="form-select" name="selectedDog" id="selectedDog">
+            {% for dog in user.dogs.all %}
+            <option value="{{ dog.id }}">{{ dog.name }}</option>
+            {% endfor %}
+          </select>
+          
+          <!-- Fecha de inicio -->
+          <div class="mb-3">
+            <label for="startDate" class="form-label">Fecha de inicio</label>
+            <input type="date" class="form-control" id="startDate" name="startDate">
+          </div>
+          
+          <!-- Fecha de finalización -->
+          <div class="mb-3">
+            <label for="endDate" class="form-label">Fecha de finalización</label>
+            <input type="date" class="form-control" id="endDate" name="endDate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-post-id="{{ post.id }}" onclick="submitServiceRequest(this)">Solicitar Servicio</button>
+      </div>
+    </div>
+  </div>
+</div>

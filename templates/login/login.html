@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+<div>
+   <form  class="form-login" method="post" novalidate>
+      {% csrf_token %}
+      <div class="form-login__header">
+         <h4>Inicia sesión en PetPal</h4>
+         <p>¿Aún no tienes cuenta? <a class="link__a" href="register">Regístrate ahora </a></p>
+         {% if error != '' %}
+           <p>{{error}}</p>
+         {% endif %}
+      </div>
+      <div>
+         <label for="email_username">
+            <h6>Email</h6>
+         </label>
+         {{form.username}}
+      </div>
+      <div>
+         <label for="password">
+            <h6>Contraseña</h6>
+         </label>
+         <div class="password-container">
+            {{form.password}}
+          </div> 
+      </div>
+      <button>Iniciar sesión</button>
+   </form>
+  </div>
+</main>
+
+{% endblock %}

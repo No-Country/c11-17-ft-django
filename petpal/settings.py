@@ -27,16 +27,33 @@ AUTH_USER_MODEL = 'tasks.CustomUser'
 
 # Application definition
 
-INSTALLED_APPS = [
+
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tasks"
 ]
 
+PETPAL_APPS = [
+    "apps",
+    "apps.homepage",
+    "apps.dog",
+    "apps.posts",
+    "apps.reservation",
+    "apps.user",
+    "apps.tasks",
+]
+
+INSTALLED_APPS = DJANGO_APPS + PETPAL_APPS
+
+""" AUTH_USER_MODEL = "apps_usermanagement.CustomUser"
+AUTHENTICATION_BACKENDS = ['apps.usermanagement.backends.EmailBackend']
+ """
+
+ 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -48,6 +65,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "petpal.urls"
+
+
 
 TEMPLATES = [
     {
@@ -65,6 +84,7 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'home-page'
 WSGI_APPLICATION = "petpal.wsgi.application"
 
 
@@ -104,14 +124,23 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATIC_URL = '/static/'
+MEDIA_URL = '/petpal_images/'
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'petpal_images')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
+AUTH_USER_MODEL = 'user.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-AUTH_USER_MODEL = 'user.User'
+LOGIN_URL = 'login'

@@ -1,30 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-3">
-    <div class="mb-3">
-        <a href="{% url 'post_new' %}" class="btn btn-primary">Crear nuevo post</a>
+
+<section id="posts" class="posts">
+  <div class="container">
+
+    <div class="section-header mt-4">
+      <h2>Publicaciones</h2>
     </div>
+
     <div class="row">
-      {% for post in object_list %}
-      <div class="col-md-4">
-        <div class="card mb-4">
-          {% if post.photo %}
-          <img src="{{ post.photo.url }}" class="card-img-top" alt="{{ post.title }}" style="width: 100%; height: 200px; object-fit: cover;">
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.description|truncatewords:20 }}</p>
-            <a href="{% url 'post_details' post.id %}" class="btn btn-primary">Leer más</a>
-            <a href="{% url 'post_edit' post.id %}" class="btn btn-secondary">Editar</a>
+      {% comment %} Columna de filtros de busqueda {% endcomment %}
+      <div class="col-md-3">
+        <h3 class="m-2">Filtro de busquedas</h3>
+        <form method="get" action="{% url 'post_list' %}">
+          <div class="form-group m-2">
+            <input type="text" name="search" class="form-control" placeholder="Buscar...">
           </div>
+          <div class="form-group m-2">
+            <select name="location" class="form-control">
+              <option value="">Todas las localizaciones</option>
+              {% for location in locations %}
+                <option value="{{ location.id }}">{{ location.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group m-2">
+            <input type="submit" value="Buscar" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+      {% comment %} Columna del Listado de publicaciones {% endcomment %}
+      <div class="col-md-8">
+        <div class="row">
+          {% for post in object_list %}
+          <div class="col-md-4">
+            <div class="card mb-4">
+              {% if post.photo %}
+              <img src="{{ post.photo.url }}" class="card-img-top" alt="{{ post.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.description|truncatewords:20 }}</p>
+                <a href="{% url 'post_details' post.id %}" class="btn btn-primary">Leer más</a>
+                {% comment %} <a href="{% url 'post_edit' post.id %}" class="btn btn-secondary">Editar</a> {% endcomment %}
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12">
+            <p>No hay publicaciones para mostrar.</p>
+          </div>
+          {% endfor %}
         </div>
       </div>
-      {% empty %}
-      <div class="col-12">
-        <p>No hay publicaciones para mostrar.</p>
-      </div>
-      {% endfor %}
     </div>
-</div>
+
+  </div>
+</section><!-- End About Section -->
+  
 {% endblock content %}
